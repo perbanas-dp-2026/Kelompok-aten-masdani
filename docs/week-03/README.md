@@ -12,3 +12,37 @@
 1. Jalankan `javac index.java`
 2. Jalankan `java index`
 3. Masukkan harga dan pilih metode pembayaran (Factory akan menyediakan objeknya).
+```mermaid```
+classDiagram
+    %% Hubungan Factory sebagai Singleton
+    class PaymentFactory {
+        -static PaymentFactory instance
+        -Map strategyMap
+        -PaymentFactory() 
+        +static getInstance() PaymentFactory
+        +getPaymentMethod(type) PaymentStrategy
+    }
+
+    %% Hubungan Strategy Pattern
+    class PaymentStrategy {
+        <<interface>>
+        +pay(amount)
+    }
+
+    class GopayStrategy {
+        +pay(amount)
+    }
+
+    class CreditCardStrategy {
+        +pay(amount)
+    }
+
+    class BankTransferStrategy {
+        +pay(amount)
+    }
+
+    %% Penjelasan Relasi
+    PaymentFactory "1" --> "*" PaymentStrategy : Manages & Creates
+    PaymentStrategy <|.. GopayStrategy : Implements
+    PaymentStrategy <|.. CreditCardStrategy : Implements
+    PaymentStrategy <|.. BankTransferStrategy : Implements
